@@ -32,6 +32,8 @@
 
   Enter "node index.js" in the command line to run the application. Follow the prompts and make selections to view and update the employee database.
 
+  [Please click here if video does not display](https://drive.google.com/file/d/1mQeX_I7c6xVsWHpNu9jemCeSfVZxVTQA/view?usp=sharing)
+
 
 
   ## License
