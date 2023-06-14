@@ -158,10 +158,9 @@ async function addEmp() {
     
     ]);
 
-    // const newEmp = await db.promise().query("SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN role r ON e.role_id = r.id JOIN department d ON d.id = r.department_id;", [response.role_name, response.role_salary, response.role_id])
-    // mainMenu();
-
-
+    const newEmp = await db.promise().query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [response.first_name, response.last_name, response.role_id, response.manager_id])
+    mainMenu();
+    
 }
 
 mainMenu();
