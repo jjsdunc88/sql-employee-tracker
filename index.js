@@ -163,4 +163,9 @@ async function addEmp() {
     
 }
 
+async function updateEmpRole() {
+    
+}
+
+
 mainMenu();
