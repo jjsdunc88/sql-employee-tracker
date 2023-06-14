@@ -21,7 +21,7 @@ function mainMenu() {
 
     ])
         .then(answer => {
-            console.log(answer);
+            
 
             if (answer.choice == 'view all departments') {
                 viewAllDept()
@@ -72,8 +72,8 @@ async function viewRoles() {
 }
 
 async function viewEmp() {
-    const roleData = await db.promise().query("SELECT * FROM employee;")
-    showTable(roleData[0]);
+    const empData = await db.promise().query("SELECT * FROM employee;")
+    showTable(empData[0]);
     mainMenu()
 }
 
@@ -88,39 +88,42 @@ async function addDept() {
     ])
 
     const deptData = await db.promise().query("INSERT INTO department (name) VALUES (?)", [response.dept_name])
-
-    console.log(deptData);
+    mainMenu();
 }
 
 
 async function addRole() {
 
     const deptData = await db.promise().query("SELECT * FROM department")
-    const deptChoices = deptData[0].map(({id, name})=> ({name: name, value: id}))
+    const deptChoices = deptData[0].map(({ id, name }) => ({ name: name, value: id }))
     const response = await inquirer.prompt([
         {
             type: "input",
             name: "role_name",
-            message: "What is the name of this new role?"
-        },
-        {
-            type: "list",
-            name: "role_id",
-            message: "What department does this role belong to?",
-            choices: deptChoices
+            message: "What is the name of the role?"
         },
         {
             type: "input",
             name: "role_salary",
-            message: "What is the salary of this role?"
+            message: "What is the salary of the role?"
         },
+        {
+            type: "list",
+            name: "role_id",
+            message: "Which department does the role belong to?",
+            choices: deptChoices
+        },
+    
 
     ]);
-   
-    const newRole = await db.promise().query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [response.role_name, response.role_salary, response.role_id]) 
 
-    console.log(newRole);
+    const newRole = await db.promise().query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [response.role_name, response.role_salary, response.role_id])
+    mainMenu();
+    
 }
 
+async function addEmp() {
+
+}
 
 mainMenu();
