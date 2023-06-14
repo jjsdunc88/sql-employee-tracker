@@ -68,8 +68,13 @@ function viewAllDept() {
 async function viewRoles() {
     const roleData = await db.promise().query("SELECT * FROM role;")
     showTable(roleData[0]);
+    mainMenu()
+}
 
-
+async function viewEmp() {
+    const roleData = await db.promise().query("SELECT * FROM employee;")
+    showTable(roleData[0]);
+    mainMenu()
 }
 
 
@@ -85,8 +90,8 @@ async function addDept() {
     const deptData = await db.promise().query("INSERT INTO department (name) VALUES (?)", [response.dept_name])
 
     console.log(deptData);
-
 }
+
 
 async function addRole() {
 
