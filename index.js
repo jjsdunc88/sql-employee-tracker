@@ -26,9 +26,24 @@ function mainMenu() {
             if (answer.choice == 'view all departments') {
                 viewAllDept()
             }
+            if (answer.choice == "view all roles") {
+                viewRoles();
+            }
+            if (answer.choice == "view all employees") {
+                viewEmp();
+            }
 
             if (answer.choice == "add a department") {
                 addDept();
+            }
+            if (answer.choice == "add a role") {
+                addRole();
+            }
+            if (answer.choice == "add an employee") {
+                addEmp();
+            }
+            if (answer.choice == "update an employee role") {
+                updateEmpRole();
             }
         })
 }
@@ -49,37 +64,57 @@ function viewAllDept() {
     })
 }
 
-function addDept() {
-    inquirer.prompt([
+
+async function viewRoles() {
+    const roleData = await db.promise().query("SELECT * FROM role;")
+    showTable(roleData[0]);
+
+
+}
+
+
+async function addDept() {
+    const response = await inquirer.prompt([
         {
             type: "input",
             name: "dept_name",
             message: "What is the name of this new department?"
         }
     ])
-        .then(answers => {
-            // INSERT INTO department (name) VALUES ("Engineering")
 
-            // db.query(`INSERT INTO department (name) VALUES ("${answers.dept_name}")`, function(err, data) {
-            //     if(err) {
-            //         console.log(err);
-            //         return;
-            //     } else {
-            //         console.log(data)
-            //     }
-            // })
+    const deptData = await db.promise().query("INSERT INTO department (name) VALUES (?)", [response.dept_name])
 
-            db.query("INSERT INTO department (name) VALUES (?)", [answers.dept_name], function (err, data) {
-                if (err) {
-                    console.log(err);
-                    return;
-                } else {
-                    console.log("Added a new department!")
-                    mainMenu()
-                }
-            })
-        })
+    console.log(deptData);
 
+}
+
+async function addRole() {
+
+    const deptData = await db.promise().query("SELECT * FROM department")
+    const deptChoices = deptData[0].map(({id, name})=> ({name: name, value: id}))
+    const response = await inquirer.prompt([
+        {
+            type: "input",
+            name: "role_name",
+            message: "What is the name of this new role?"
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "What department does this role belong to?",
+            choices: deptChoices
+        },
+        {
+            type: "input",
+            name: "role_salary",
+            message: "What is the salary of this role?"
+        },
+
+    ]);
+   
+    const newRole = await db.promise().query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [response.role_name, response.role_salary, response.role_id]) 
+
+    console.log(newRole);
 }
 
 
