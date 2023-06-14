@@ -16,6 +16,7 @@ function mainMenu() {
                 'add a role',
                 'add an employee',
                 'update an employee role',
+                'exit'
             ]
         },
 
@@ -45,6 +46,9 @@ function mainMenu() {
             if (answer.choice == "update an employee role") {
                 updateEmpRole();
             }
+            if (answer.choice == "exit") {
+                process.exit();
+            }
         })
 }
 
@@ -72,7 +76,7 @@ async function viewRoles() {
 }
 
 async function viewEmp() {
-    const empData = await db.promise().query("SELECT * FROM employee;")
+    const empData = await db.promise().query("SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN role r ON e.role_id = r.id JOIN department d ON d.id = r.department_id;")
     showTable(empData[0]);
     mainMenu()
 }
@@ -123,6 +127,40 @@ async function addRole() {
 }
 
 async function addEmp() {
+
+    const roleData = await db.promise().query("SELECT * FROM role")
+    const roleChoices = roleData[0].map(({ title, id}) => ({ name: title, value: id }))
+    const empData = await db.promise().query("SELECT * FROM employee")
+    const empChoices = empData[0].map(({ first_name, last_name, id}) => ({ name: `${first_name} ${last_name}`, value: id }))
+    const response = await inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "What is the employee's first name?"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "What is the employee's last name?"
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "What is the employee's role?",
+            choices: roleChoices
+        },
+        {
+            type: "list",
+            name: "manager_id",
+            message: "Who is the employee's manager?",
+            choices: empChoices
+        },
+    
+    ]);
+
+    // const newEmp = await db.promise().query("SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN role r ON e.role_id = r.id JOIN department d ON d.id = r.department_id;", [response.role_name, response.role_salary, response.role_id])
+    // mainMenu();
+
 
 }
 
