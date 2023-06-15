@@ -185,9 +185,9 @@ async function updateEmpRole() {
         }
     ])
 
-    const updatedEmp = await db.promise().query("UPDATE ")
+    const updatedEmp = await db.promise().query("UPDATE employee SET role_id WHERE employee.id (?)", [response.emp, response.emp_role])
     mainMenu();
-    
+
 }
 
 
