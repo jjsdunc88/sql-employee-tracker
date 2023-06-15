@@ -172,7 +172,7 @@ async function updateEmpRole() {
     const response = await inquirer.prompt([
         {
             type: "list",
-            name: "emp_",
+            name: "emp",
             message: "Which employee's role do you want to update?",
             choices: empChoices
         },
@@ -184,8 +184,8 @@ async function updateEmpRole() {
 
         }
     ])
-
-    const updatedEmp = await db.promise().query("UPDATE employee SET role_id WHERE employee.id (?)", [response.emp, response.emp_role])
+    console.log(response.emp, response.emp_role);
+    const updatedEmp = await db.promise().query("UPDATE employee SET role_id=? WHERE employee.id=?", [response.emp_role, response.emp])
     mainMenu();
 
 }
