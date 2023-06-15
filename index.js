@@ -22,7 +22,7 @@ function mainMenu() {
 
     ])
         .then(answer => {
-            
+
 
             if (answer.choice == 'view all departments') {
                 viewAllDept()
@@ -117,21 +117,21 @@ async function addRole() {
             message: "Which department does the role belong to?",
             choices: deptChoices
         },
-    
+
 
     ]);
 
     const newRole = await db.promise().query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [response.role_name, response.role_salary, response.role_id])
     mainMenu();
-    
+
 }
 
 async function addEmp() {
 
     const roleData = await db.promise().query("SELECT * FROM role")
-    const roleChoices = roleData[0].map(({ title, id}) => ({ name: title, value: id }))
+    const roleChoices = roleData[0].map(({ title, id }) => ({ name: title, value: id }))
     const empData = await db.promise().query("SELECT * FROM employee")
-    const empChoices = empData[0].map(({ first_name, last_name, id}) => ({ name: `${first_name} ${last_name}`, value: id }))
+    const empChoices = empData[0].map(({ first_name, last_name, id }) => ({ name: `${first_name} ${last_name}`, value: id }))
     const response = await inquirer.prompt([
         {
             type: "input",
@@ -155,15 +155,38 @@ async function addEmp() {
             message: "Who is the employee's manager?",
             choices: empChoices
         },
-    
+
     ]);
 
     const newEmp = await db.promise().query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [response.first_name, response.last_name, response.role_id, response.manager_id])
     mainMenu();
-    
+
 }
 
 async function updateEmpRole() {
+    const empData = await db.promise().query("SELECT * FROM employee")
+    const empChoices = empData[0].map(({ first_name, last_name, id }) => ({ name: `${first_name} ${last_name}`, value: id }))
+    const roleData = await db.promise().query("SELECT * FROM role")
+    const roleChoices = roleData[0].map(({ title, id }) => ({ name: title, value: id }))
+
+    const response = await inquirer.prompt([
+        {
+            type: "list",
+            name: "emp_",
+            message: "Which employee's role do you want to update?",
+            choices: empChoices
+        },
+        {
+            type: "list",
+            name: "emp_role",
+            message: "Which role do you want to assign to the selected employee?",
+            choices: roleChoices
+
+        }
+    ])
+
+    const updatedEmp = await db.promise().query("UPDATE ")
+    mainMenu();
     
 }
 
