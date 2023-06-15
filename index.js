@@ -185,7 +185,7 @@ async function updateEmpRole() {
         }
     ])
     console.log(response.emp, response.emp_role);
-    const updatedEmp = await db.promise().query("UPDATE employee SET role_id=? WHERE employee.id=?", [response.emp_role, response.emp])
+    const updatedEmp = await db.promise().query("UPDATE employee SET role_id=? WHERE id=?", [response.emp_role, response.emp])
     mainMenu();
 
 }
