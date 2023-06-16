@@ -24,20 +24,15 @@ const config = {
   }
 };
 
-async function showTable(data){
+async function showTable(data) {
   let tableData = [];
-  // option 1 fancy one line table data format
+
   tableData = [
-    //column
-    Object.keys(data[0]), 
-    //values
+
+    Object.keys(data[0]),
+
     ...data.map(val => Object.values(val))];
 
-  // // option 2 for tables, using basic for loop and starter array
-  // tableData = [Object.keys(data[0])];
-  // for(var i = 0; i< data.length; i++){
-  //   tableData.push(Object.values(data[i]));
-  // }
   return await inquirer.prompt([
     {
       message: "\n" + table(tableData, config),
@@ -45,17 +40,8 @@ async function showTable(data){
       name: 'name'
     }
   ])
-  
+
 }
 
-// const dbData = [
-//   { id: 1, name: "Anthony"},
-//   { id: 2, name: "Myself"},
-//   { id: 3, name: "Turtle"},
-// ];
-
-// showTable(dbData, () => {
-//   console.log("Do stuff after!");
-// });
 
 module.exports = showTable;

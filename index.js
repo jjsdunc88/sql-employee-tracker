@@ -54,14 +54,11 @@ function mainMenu() {
 
 
 function viewAllDept() {
-    // database to get all departments
-    // SELECT * FROM department;
     db.query("SELECT * FROM department;", async function (err, data) {
         if (err) {
             console.log(err);
             return;
         } else {
-            // console.log(data)
             await showTable(data)
             mainMenu()
         }
