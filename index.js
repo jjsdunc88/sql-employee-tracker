@@ -56,13 +56,13 @@ function mainMenu() {
 function viewAllDept() {
     // database to get all departments
     // SELECT * FROM department;
-    db.query("SELECT * FROM department;", function (err, data) {
+    db.query("SELECT * FROM department;", async function (err, data) {
         if (err) {
             console.log(err);
             return;
         } else {
             // console.log(data)
-            showTable(data)
+            await showTable(data)
             mainMenu()
         }
     })
@@ -71,13 +71,13 @@ function viewAllDept() {
 
 async function viewRoles() {
     const roleData = await db.promise().query("SELECT * FROM role;")
-    showTable(roleData[0]);
+    await showTable(roleData[0]);
     mainMenu()
 }
 
 async function viewEmp() {
     const empData = await db.promise().query("SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN role r ON e.role_id = r.id JOIN department d ON d.id = r.department_id;")
-    showTable(empData[0]);
+    await showTable(empData[0]);
     mainMenu()
 }
 
@@ -184,7 +184,7 @@ async function updateEmpRole() {
 
         }
     ])
-    console.log(response.emp, response.emp_role);
+    
     const updatedEmp = await db.promise().query("UPDATE employee SET role_id=? WHERE id=?", [response.emp_role, response.emp])
     mainMenu();
 

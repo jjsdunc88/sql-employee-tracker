@@ -24,7 +24,7 @@ const config = {
   }
 };
 
-function showTable(data, cb){
+async function showTable(data){
   let tableData = [];
   // option 1 fancy one line table data format
   tableData = [
@@ -38,16 +38,14 @@ function showTable(data, cb){
   // for(var i = 0; i< data.length; i++){
   //   tableData.push(Object.values(data[i]));
   // }
-  inquirer.prompt([
+  return await inquirer.prompt([
     {
       message: "\n" + table(tableData, config),
       type: 'input',
       name: 'name'
     }
   ])
-  .then( () => {
-    if(cb) cb();
-  })
+  
 }
 
 // const dbData = [
