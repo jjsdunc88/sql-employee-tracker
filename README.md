@@ -48,9 +48,18 @@
 
 
 
-  ## Contributing
+  
+  ## Credits
 
-  NA
+  Tutor Joem Casusi
+
+  Tutor Matthew Calimbas
+
+  [Myro Lee](https://github.com/myrojoylee)
+
+  TA Tom Woods
+
+  Instructor Anthony Maddatu
 
 
 
