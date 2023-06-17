@@ -34,7 +34,8 @@
 
   [Please click here if video does not display](https://drive.google.com/file/d/15xZ82qCcujq2N4xqr5-cczsjhxDHDU05/view)
   
-  [Untitled_ Jun 12, 2023 4_19 PM.webm](https://github.com/jjsdunc88/sql-employee-tracker/assets/125617546/6361cda3-17ab-4c18-aad6-c1b849954366)
+  [Untitled_ Jun 16, 2023 8_36 PM (1).webm](https://github.com/jjsdunc88/sql-employee-tracker/assets/125617546/d3e98b52-fe84-4d25-bddc-9e03659dadc1)
+
 
 
 
